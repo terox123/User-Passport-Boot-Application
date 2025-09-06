@@ -15,7 +15,7 @@
     <p> Age: <span th:text="${user.getAge()}">Age</span></p>
     <p> Email: <span th:text="${user.getEmail()}">Email</span></p>
     <p> Created: <span th:text="${user.getFormattedCreatedAt()}">Created</span></p>
-    <p> Date Of Birth: <span th:text="${user.getFormattedDateOfBirth()}">Date of Birth</span></p>
+    <p> Date Of Birth: <span th:text="${user.getDateOfBirth()}">Date of Birth</span></p>
     <p> Gender: <span th:text="${user.getGender()}">Gender</span></p>
     <p> Password: <span th:text="${user.getPassword()}"> Password></span></p>
     <p> Role: <span th:text="${user.getRole()}">Role></span></p>
@@ -26,6 +26,7 @@
 
 <div th:if="${passport == null}">
     <p>No passport</p>
+    <a href="passports/new">Create Passport</a>
 </div>
 
 

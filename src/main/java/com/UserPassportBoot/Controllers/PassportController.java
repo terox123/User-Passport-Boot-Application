@@ -6,6 +6,7 @@ import com.UserPassportBoot.model.User;
 import com.UserPassportBoot.services.PassportService;
 import com.UserPassportBoot.services.UserService;
 import com.UserPassportBoot.util.PassportValidator;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -166,4 +167,7 @@ public class PassportController {
 
         return "passport/searchResult";
     }
+
+
+
 }

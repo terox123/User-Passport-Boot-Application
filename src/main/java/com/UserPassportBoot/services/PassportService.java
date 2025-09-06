@@ -32,7 +32,7 @@ public class PassportService {
 
     public Passport showByIdOfPassport(int id) {
         return passportRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Passport with this id "+ id +" not found"));
+                .orElseThrow(() -> new EntityNotFoundException("Passport with this id "+ id + " not found"));
     }
 
 
@@ -43,7 +43,7 @@ public Page<Passport> searchPassportByStartingWith(String characters, Pageable p
 
     public Passport findByOwner(User owner) {
     return passportRepository.findByOwner(owner).
-            orElseThrow(() -> new EntityNotFoundException("Passport with owner " + owner + "not found"));
+            orElse(null);
 
     }
 

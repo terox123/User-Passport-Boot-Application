@@ -36,7 +36,7 @@
     <div class="form-group">
         <label for="dateOfBirth">Date of Birth:</label>
         <input type="date" id="dateOfBirth" name="dateOfBirth"
-               th:value="${user.dateOfBirth != null ? user.getFormattedDateOfBirth() : ''}"
+               th:value="${user.dateOfBirth}"
                required>
         <div class="error" th:if="${#fields.hasErrors('dateOfBirth')}" th:errors="*{dateOfBirth}"></div>
     </div>

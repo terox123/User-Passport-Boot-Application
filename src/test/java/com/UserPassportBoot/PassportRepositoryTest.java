@@ -40,9 +40,9 @@ private User testUser1;
         passportRepository.deleteAll();
         userRepository.deleteAll();
 
-         testUser1 = new User("John", "john@example.com", LocalDate.of(1990, 5, 15), "Male", "password123", "USER");
-        User testUser2 = new User("Alice", "alice@example.com", LocalDate.of(1985, 8, 22), "Female", "password456", "USER");
-        User testUser3 = new User("Bob", "bob@example.com", LocalDate.of(1995, 3, 10), "Male", "password789", "ADMIN");
+         testUser1 = new User("John", 35,"john@example.com", LocalDate.of(1990, 5, 15), "Male", "password123", "USER");
+        User testUser2 = new User("Alice", 40,"alice@example.com", LocalDate.of(1985, 8, 22), "Female", "password456", "USER");
+        User testUser3 = new User("Bob", 30,"bob@example.com", LocalDate.of(1995, 3, 10), "Male", "password789", "ADMIN");
         userRepository.saveAll(List.of(testUser1, testUser2, testUser3));
 
         Passport testPassport1 = new Passport("9219", "762108", testUser1);
@@ -62,7 +62,7 @@ private User testUser1;
 
     @Test
     void findByOwner_ShouldReturnEmpty_WhenNotExists() {
-        User newUser = new User("New", "new@example.com", LocalDate.of(2000, 1, 1), "Male", "password", "USER");
+        User newUser = new User("New", 25,"new@example.com", LocalDate.of(2000, 1, 1), "Male", "password", "USER");
         userRepository.save(newUser);
 
         Optional<Passport> foundPassport = passportRepository.findByOwner(newUser);
