@@ -38,9 +38,9 @@ public class UserRepositoryTest {
 userRepository.deleteAll();
 passportRepository.deleteAll();
 
-        User testUser1 = new User("John", "john@example.com", LocalDate.of(1990, 5, 15), "Male", "password123", "USER");
-        User testUser2 = new User("Alice", "alice@example.com", LocalDate.of(1985, 8, 22), "Female", "password456", "USER");
-        User testUser3 = new User("Bob", "bob@example.com", LocalDate.of(1995, 3, 10), "Male", "password789", "ADMIN");
+        User testUser1 = new User("John", 35,"john@example.com", LocalDate.of(1990, 5, 15), "Male", "password123", "USER");
+        User testUser2 = new User("Alice", 40,"alice@example.com", LocalDate.of(1985, 8, 22), "Female", "password456", "USER");
+        User testUser3 = new User("Bob", 30,"bob@example.com", LocalDate.of(1995, 3, 10), "Male", "password789", "ADMIN");
 
 
         userRepository.saveAll(List.of(testUser1, testUser2, testUser3));
@@ -131,7 +131,7 @@ passportRepository.deleteAll();
 
     @Test
     void save_ShouldCreateNewUser() {
-        User newUser = new User("NewUser", "new@example.com",  LocalDate.of(2000, 1, 1), "Female", "password", "USER");
+        User newUser = new User("NewUser", 25,"new@example.com",  LocalDate.of(2000, 1, 1), "Female", "password", "USER");
 
         User savedUser = userRepository.save(newUser);
 

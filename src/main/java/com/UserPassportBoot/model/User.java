@@ -11,45 +11,40 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
-
+@Getter
 @Entity
 @Table(name = "java_users")
 public class User {
 
     @Setter
-    @Getter
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int id;
 
-    @Getter
     @Setter
-    @Min(0)
+    @Min(value = 0)
+    @Max(value = 130)
     @Column(name = "age")
     private int age;
 
 
-    @Getter
     @Setter
     @Column(name = "username")
     @NotBlank(message = "Name can't be empty")
     private String name;
 
-    @Getter
     @Setter
     @NotEmpty(message = "Email can't be empty")
     @Email(message = "Email should be valid")
     @Column(name = "email")
     private String email;
 
-    @Getter
     @Setter
     @Column(name = "created_at", updatable = false)
     @DateTimeFormat(pattern = "dd/MM/yyyy")
     private LocalDateTime createdAt;
 
-@Getter
 @Setter
 @Column(name="date_of_birth")
 @Past(message = "Date should be in past")
@@ -57,13 +52,11 @@ public class User {
     private LocalDate dateOfBirth;
 
 @Setter
-@Getter
 @Column(name = "gender")
 @NotEmpty(message = "Gender can't be empty")
 private String gender;
 
 @Setter
-@Getter
 @Column(name = "password", length = 100)  // шифрование bCrypt
 private String password;
 
@@ -101,7 +94,6 @@ private String role;
         passport.setOwner(this);
     }
 
-
     public String getFormattedCreatedAt() {
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("MM-dd-yyyy HH:mm:ss");
         return createdAt.format(dateTimeFormatter);
@@ -115,7 +107,7 @@ private String role;
                 ", Age='" + age + '\'' +
                 ", email='" + email + '\'' +
                 ", createdAt='" + getFormattedCreatedAt() + '\'' +
-                ", Date of Birth='" + getFormattedDateOfBirth() + '\'' +
+                ", Date of Birth='" + dateOfBirth.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")) + '\'' +
                 ", Gender='" + gender + '\'' +
                 ", Password='" + password + '\'' +
                 ", Role='" + role +
@@ -123,9 +115,6 @@ private String role;
     }
 
 
-    public String getFormattedDateOfBirth() {
-        return dateOfBirth.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-    }
 
 
     @Override

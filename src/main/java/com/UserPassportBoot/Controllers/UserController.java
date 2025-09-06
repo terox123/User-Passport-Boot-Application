@@ -2,22 +2,26 @@ package com.UserPassportBoot.Controllers;
 
 
 
+import com.UserPassportBoot.DTO.UserDTO;
 import com.UserPassportBoot.model.Passport;
 import com.UserPassportBoot.model.User;
 import com.UserPassportBoot.services.PassportService;
 import com.UserPassportBoot.services.UserService;
 import com.UserPassportBoot.util.UserValidator;
+import jakarta.persistence.EntityNotFoundException;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import jakarta.validation.Valid;
+
+import java.sql.SQLOutput;
 
 
 @Controller
@@ -27,11 +31,14 @@ public class UserController {
 private final UserService userService;
 private final UserValidator userValidator;
 private final PassportService passportService;
+private final ModelMapper modelMapper;
 @Autowired
-    public UserController(UserService userService, UserValidator userValidator, PassportService passportService) {
+    public UserController(UserService userService, UserValidator userValidator, PassportService passportService, ModelMapper modelMapper) {
     this.userService = userService;
     this.userValidator = userValidator;
     this.passportService = passportService;
+    this.modelMapper = modelMapper;
+
 }
 /*
 отображение всех пользователей, кастомная пагинация только в этом методе, сортировка через RequestParam по
@@ -64,7 +71,7 @@ private final PassportService passportService;
     }
     // перенаправление на страницу создания user
     @GetMapping("/new")
-    public String newUser(@ModelAttribute("user") User user){
+    public String newUser(@ModelAttribute("user") UserDTO userDTO){
 return "user/new";
     }
 /*
@@ -73,13 +80,14 @@ return "user/new";
  */
 
     @PostMapping()
-    public String create(@ModelAttribute("user") @Valid User user, BindingResult bindingResult){
-        userValidator.validate(user, bindingResult);
-    if(bindingResult.hasErrors())
-        return "user/new";
+    public String create(@ModelAttribute("user") @Valid UserDTO userDTO, BindingResult bindingResult){
 
-    userService.save(user);
-
+        User user = convertToUser(userDTO);
+userValidator.validate(user, bindingResult);
+        if(bindingResult.hasErrors()){
+            return "user/new";
+        }
+        userService.save(user);
         return "redirect:/users";
     }
 /*
@@ -92,6 +100,7 @@ return "user/new";
     }
 // проверка на валидность данных, при правильных изменениях redirect на страницу с пользвоателями
 // , иначе остаётся на этой же станице
+
     @PostMapping("/{id}")
     public String update(@ModelAttribute("user") @Valid User user,
                          @PathVariable("id") int id,
@@ -117,4 +126,20 @@ model.addAttribute("user", userService.findUserById(id));
         userService.delete(id);
         return "redirect:/users";
     }
+    @ExceptionHandler(EntityNotFoundException.class)
+    public String noPassportError(EntityNotFoundException ex, Model model){
+        model.addAttribute("error", ex.getMessage());
+        return "user/show";
+    }
+
+
+    private User convertToUser(UserDTO userDTO){
+return modelMapper.map(userDTO, User.class);
+
+    }
+
+    private UserDTO convertToUserDto(User user){
+        return modelMapper.map(user, UserDTO.class);
+    }
+
 }

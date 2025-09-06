@@ -3,6 +3,7 @@ package com.UserPassportBoot.util;
 
 import com.UserPassportBoot.model.User;
 import com.UserPassportBoot.services.UserService;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
@@ -29,9 +30,11 @@ public class UserValidator implements Validator {
         User user = (User) o;
         LocalDate dateToday = LocalDate.now();
         LocalDate date14YearsAgo = dateToday.minusYears(14);
-        User existingUser = userService.findByEmail(user.getEmail());
-        if (existingUser != null && existingUser.getId() != user.getId()) {
+        try {
+            User existingUser = userService.findByEmail(user.getEmail());
             errors.rejectValue("email", "", "Email is already exists");
+        } catch (EntityNotFoundException e) {
+            System.out.println("Email is unique: " + user.getEmail());
         }
 
         if(user.getName() == null || !user.getName().matches("^[a-zA-Z]{2,20}$")){

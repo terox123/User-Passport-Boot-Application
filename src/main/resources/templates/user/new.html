@@ -15,6 +15,7 @@
 <h1>Create New User</h1>
 
 <form th:method="POST" th:action="@{/users}" th:object="${user}" id="userForm">
+
     <div class="form-group">
         <label for="name">Name:</label>
         <input type="text" id="name" th:field="*{name}" required>
@@ -36,7 +37,7 @@
     <div class="form-group">
         <label for="dateOfBirth">Date of Birth:</label>
         <input type="date" id="dateOfBirth" name="dateOfBirth"
-               th:value="${user.dateOfBirth != null ? user.getFormattedDateOfBirth() : ''}"
+               th:value="${user.dateOfBirth}"
                required>
         <div class="error" th:if="${#fields.hasErrors('dateOfBirth')}" th:errors="*{dateOfBirth}"></div>
     </div>
