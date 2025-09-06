@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Registration</title>
+    <style>
+        .error { color: red; font-size: 0.9em; }
+        .form-group { margin-bottom: 15px; }
+        label { display: inline-block; width: 150px; }
+        input, select { padding: 5px; width: 200px; }
+        .radio-group { display: inline-block; margin-right: 15px; }
+    </style>
+</head>
+<body>
+<h1>Registration</h1>
+
+<form th:method="POST" th:action="@{/auth/registration}" th:object="${user}" id="userForm">
+    <div class="form-group">
+        <label for="name">Name:</label>
+        <input type="text" id="name" th:field="*{name}" required>
+        <div class="error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+    </div>
+
+    <div class="form-group">
+        <label for="age">Age:</label>
+        <input type="number" id="age" th:field="*{age}" required>
+        <div class="error" th:if="${#fields.hasErrors('age')}" th:error="*{age}"></div>
+    </div>
+
+    <div class="form-group">
+        <label for="email">Email:</label>
+        <input type="email" id="email" th:field="*{email}" required>
+        <div class="error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
+    </div>
+
+    <div class="form-group">
+        <label for="dateOfBirth">Date of Birth:</label>
+        <input type="date" id="dateOfBirth" name="dateOfBirth"
+               th:value="${user.dateOfBirth != null ? user.getFormattedDateOfBirth() : ''}"
+               required>
+        <div class="error" th:if="${#fields.hasErrors('dateOfBirth')}" th:errors="*{dateOfBirth}"></div>
+    </div>
+
+    <div class="form-group">
+        <label>Gender:</label>
+        <div class="radio-group">
+            <input type="radio" id="male" th:field="*{gender}" th:value="'MALE'" required>
+            <label for="male">Male</label>
+        </div>
+        <div class="radio-group">
+            <input type="radio" id="female" th:field="*{gender}" th:value="'FEMALE'">
+            <label for="female">Female</label>
+        </div>
+        <div class="error" th:if="${#fields.hasErrors('gender')}" th:errors="*{gender}"></div>
+    </div>
+
+
+    <!-- Простое поле пароля -->
+    <div class="form-group">
+        <label for="password">Password:</label>
+        <input type="password" id="password" th:field="*{password}" required>
+        <div class="error" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
+    </div>
+
+
+    <div class="form-group">
+        <label>Role:</label>
+        <div class="radio-group">
+            <input type="radio" id="USER" th:field="*{role}" th:value="'USER'" required>
+            <label for="USER">USER</label>
+        </div>
+        <div class="radio-group">
+            <input type="radio" id="ADMIN" th:field="*{role}" th:value="'ADMIN'">
+            <label for="ADMIN">ADMIN</label>
+        </div>
+        <div class="error" th:if="${#fields.hasErrors('role')}" th:errors="*{role}"></div>
+    </div>
+
+
+
+    <div class="form-group">
+        <input type="submit" value="Create User">
+    </div>
+
+</form>
+</body>
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Search Result</title>
+</head>
+<body>
+
+<div th:if="${#lists.isEmpty(passportsByPart)}">
+    No passports found
+</div>
+
+<div th:each="passport : ${passportsByPart}">
+    <h2>Owner Information:</h2>
+    <p>ID: <span th:text="${passport.getOwner().getId()}">ID</span></p>
+    <p>Name: <span th:text="${passport.getOwner().getName()}">Name</span></p>
+    <p>Email: <span th:text="${passport.getOwner().getEmail()}">Email</span></p>
+    <p>Created: <span th:text="${passport.getOwner().getFormattedCreatedAt()}">Created</span></p>
+
+    <h2>Passport Information:</h2>
+    <p>Serial: <span th:text="${passport.getSerial()}">Serial</span></p>
+    <p>Number: <span th:text="${passport.getNumber()}">Number</span></p>
+    <p>Control Digit: <span th:text="${passport.getControlDigit()}">Control Digit</span></p>
+    <p>Date of Receipt: <span th:text="${passport.getDateOfReceipt()}">Date of Receipt</span></p>
+    <p>Expiration Date: <span th:text="${passport.getExpirationDate()}">Expiration Date</span></p>
+</div>
+
+<a th:href="@{/passports}">Back to Passport List</a>
+</body>
+</html>

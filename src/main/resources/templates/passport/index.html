@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Passports</title>
+</head>
+<body>
+<a href="users">Users Page</a>
+<br/>
+<a href="passports/new">Create Passport</a>
+<br/>
+
+<a th:href="@{/passports/search}">Search Passport</a>
+<br/>
+
+<a> Passports owners </a>
+<div th:if="${#lists.isEmpty(passports)}">
+    <p>No passports found.</p>
+</div>
+
+<div th:each="passport : ${passports}">
+    <p>
+        <a th:href="@{/passports/{id}(id=${passport.getId()})}" th:text="${passport.getOwner().getName()}" >Name</a>
+        <a th:href="@{/passports/{id}/edit(id=${passport.getId()})}" >Edit</a>
+        <a th:href="@{/passports/{id}/delete(id=${passport.getId()})}" >Delete</a>
+    </p>
+</div>
+
+
+
+
+<a href="/">Return to the home page</a>
+
+</body>
+</html>

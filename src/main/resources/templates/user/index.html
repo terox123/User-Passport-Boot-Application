@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Users</title>
+</head>
+<body>
+<a href="passports">Passports Page</a>
+<br/>
+<a href="users/new">Create user</a>
+
+<br/>
+<br/>
+<a> Users List </a>
+<div th:if="${#lists.isEmpty(users)}">
+    <p>No users found.</p>
+</div>
+
+<div th:each="user : ${users}">
+    <p>
+        <a th:href="@{/users/{id}(id=${user.getId()})}" th:text="${user.getName()}" >Name</a>
+        <a th:href="@{/users/{id}/edit(id=${user.getId()})}" >Edit</a>
+        <a th:href="@{/users/{id}/delete(id=${user.getId()})}" >Delete</a>
+    </p>
+</div>
+
+<a href="/">Return to the home page</a>
+
+
+</body>
+</html>
+
+

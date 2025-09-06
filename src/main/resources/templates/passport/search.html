@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Search Passport</title>
+</head>
+<body>
+<h1>Search Passport</h1>
+<form th:action="@{/passports/search/results}" method="get">
+    <label for="numberPart">Input part of passport number:</label>
+    <input type="text" id="numberPart" name="numberPart" required minlength="1" maxlength="6">
+    <button type="submit">Search</button>
+</form>
+<a th:href="@{/passports}">Back to list</a>
+</body>
+</html>

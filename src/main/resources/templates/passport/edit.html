@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Passport</title>
+</head>
+<body>
+<h1>Edit Passport</h1>
+
+<form th:action="@{/passports/{id}(id=${passport.id})}" th:object="${passport}" method="post">
+    <input type="hidden" th:field="*{id}" />
+    <input type="hidden" th:field="*{owner.id}">
+
+    <a th:href="@{/users/{id}(id=${passport.owner.id})}"> <span th:text="${passport.owner.name}">User Info</span>
+    </a>
+
+    <div>
+        <label for="serial">Serial of a passport:</label>
+        <input type="text" id="serial" th:field="*{serial}" required />
+        <div style="color:red" th:if="${#fields.hasErrors('serial')}" th:errors="*{serial}">Serial Error</div>
+    </div>
+
+    <div>
+        <label for="number">Number of a passport:</label>
+        <input type="text" id="number" th:field="*{number}" required />
+        <div style="color:red" th:if="${#fields.hasErrors('number')}" th:errors="*{number}">Number Error</div>
+    </div>
+
+    <button type="submit">Update Passport</button>
+</form>
+</body>
+</html>

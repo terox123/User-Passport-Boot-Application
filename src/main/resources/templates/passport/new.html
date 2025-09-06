@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head> <meta charset="UTF-8">
+  <title>New Passport</title>
+</head>
+<body>
+<h1>New Passport</h1>
+
+<form th:action="@{/passports}" th:object="${passport}" method="post">
+
+
+  <div> <label for="owner">Owner of a passport:</label>
+    <select id="owner" name="ownerId">
+      <option value="">-- Choose an owner --</option>
+      <option th:each="user : ${users}"
+              th:value="${user.getId()}"
+              th:text="${user.getName()}"></option>
+    </select>
+  </div>
+
+
+  <div>
+    <label for="serial">Serial of a passport:</label>
+    <input type="text" id="serial" th:field="*{serial}" placeholder="1234" maxlength="4" required />
+    <div style="color:red" th:if="${#fields.hasErrors('serial')}" th:errors="*{serial}"> Serial Error</div>
+  </div>
+  <div>
+    <label for="number">Number of a passport:</label>
+    <input type="text" id="number" th:field="*{number}" placeholder="567890" maxlength="6" required />
+    <div style="color:red" th:if="${#fields.hasErrors('number')}" th:errors="*{number}"> Number Error</div>
+  </div> <button type="submit">Save Passport</button>
+</form>
+</body>
+</html>

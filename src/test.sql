@@ -1,0 +1,1 @@
+update java_users set password='test' where id = 7

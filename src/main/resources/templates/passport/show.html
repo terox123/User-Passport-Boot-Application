@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Passport Details</title>
+</head>
+<body>
+<h1>Passport Details</h1>
+
+<div th:if="${passport != null}">
+  <h2>Owner Information:</h2>
+  <p>ID: <span th:text="${passport.getOwner().getId()}">ID</span></p>
+  <p>Age: <span th:text="${passport.getOwner().getAge()}">Age</span></p>
+  <p>Name: <span th:text="${passport.getOwner().getName()}">Name</span></p>
+  <p>Email: <span th:text="${passport.getOwner().getEmail()}">Email</span></p>
+  <p>Created: <span th:text="${passport.getOwner().getFormattedCreatedAt()}">Created</span></p>
+  <p>Gender: <span th:text="${passport.getOwner().getGender()}">Gender</span></p>
+  <p>Date of birth: <span th:text="${passport.getOwner().getFormattedDateOfBirth()}">Date of Birth</span></p>
+
+  <h2>Passport Information:</h2>
+  <p>Serial: <span th:text="${passport.getSerial()}">Serial</span></p>
+  <p>Number: <span th:text="${passport.getNumber()}">Number</span></p>
+  <p>Control Digit: <span th:text="${passport.getControlDigit()}">Control Digit</span></p>
+  <p>Date of Receipt: <span th:text="${passport.getFormattedDateOfReceipt()}">Date of Receipt</span></p>
+  <p>Expiration Date: <span th:text="${passport.getFormattedExpirationDate()}">Expiration Date</span></p>
+  <p>Status: <span th:text="${passport.getStatusOfPassport()}">Status of passport</span></p>
+</div>
+
+<div th:if="${passport == null}">
+  <p>No passport found.</p>
+</div>
+
+</body>
+</html>
