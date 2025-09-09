@@ -26,7 +26,7 @@
 
 <div th:if="${passport == null}">
     <p>No passport</p>
-    <a href="passports/new">Create Passport</a>
+    <a th:href="@{/passports/new}">Create Passport</a>
 </div>
 
 

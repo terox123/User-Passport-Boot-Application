@@ -57,26 +57,26 @@
         </div>
     </div>
 
-        <div class="form-group">
-            <label>Role:</label>
-            <div class="radio-group">
-                <input type="radio" id="USER" th:field="*{role}" th:value="'USER'">
-                <label for="USER">USER</label>
-            </div>
-            <div class="radio-group">
-                <input type="radio" id="ADMIN" th:field="*{role}" th:value="'ADMIN'">
-                <label for="ADMIN">ADMIN</label>
-            </div>
-            <div class="error" th:if="${#fields.hasErrors('role')}" th:errors="*{role}"></div>
+    <div class="form-group">
+        <label>Role:</label>
+        <div class="radio-group">
+            <input type="radio" id="USER" th:field="*{role}" th:value="'USER'">
+            <label for="USER">USER</label>
         </div>
+        <div class="radio-group">
+            <input type="radio" id="ADMIN" th:field="*{role}" th:value="'ADMIN'">
+            <label for="ADMIN">ADMIN</label>
+        </div>
+        <div class="error" th:if="${#fields.hasErrors('role')}" th:errors="*{role}"></div>
+    </div>
 
 
-        <div class="form-group">
-            <label for="password">Password:</label>
-            <input type="password" id="password" th:field="*{password}"
-            placeholder="Оставьте пустым, если не хотите менять пароль.">
-            <div class="error" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
-        </div>
+    <div class="form-group">
+        <label for="password">Password:</label>
+        <input type="password" id="password" th:field="*{password}"
+               placeholder="Оставьте пустым, если не хотите менять пароль.">
+        <div class="error" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
+    </div>
 
 
     <div class="form-group">
