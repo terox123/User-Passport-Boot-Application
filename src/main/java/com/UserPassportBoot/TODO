@@ -1,3 +1,1 @@
-внедрить csrf(+)
-внедрить roles(+)
-настроить отображение в passport edit пользователя(+-)
+// внедрить dto в edit, registration, passport

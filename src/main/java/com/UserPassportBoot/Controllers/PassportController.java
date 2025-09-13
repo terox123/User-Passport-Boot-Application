@@ -1,12 +1,14 @@
 package com.UserPassportBoot.Controllers;
 
 
+import com.UserPassportBoot.DTO.PassportDTO;
 import com.UserPassportBoot.model.Passport;
 import com.UserPassportBoot.model.User;
 import com.UserPassportBoot.services.PassportService;
 import com.UserPassportBoot.services.UserService;
 import com.UserPassportBoot.util.PassportValidator;
 import jakarta.persistence.EntityNotFoundException;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -15,6 +17,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,14 +31,15 @@ public class PassportController {
     private final PassportService passportService;
     private final UserService userService;
     private final PassportValidator passportValidator;
-
+    private final ModelMapper modelMapper;
     @Autowired
     public PassportController(PassportService passportService,
                               UserService userService,
-                              PassportValidator passportValidator) {
+                              PassportValidator passportValidator, ModelMapper modelMapper) {
         this.passportService = passportService;
         this.userService = userService;
         this.passportValidator = passportValidator;
+        this.modelMapper = modelMapper;
     }
     /*
     Возвращаются все паспорта, есть пагинация, тут можно настроить её вручную, также есть сортировка
@@ -57,7 +61,7 @@ public class PassportController {
         return "passport/index";
     }
 
-// информация о паспорте
+    // информация о паспорте
     @GetMapping("/{id}")
     public String show(Model model, @PathVariable("id") int id) {
         model.addAttribute("passport", passportService.showByIdOfPassport(id));
@@ -68,7 +72,7 @@ public class PassportController {
      на страницу создания паспорта, добавляются пустой паспорт, и пользователи для назначения
      */
     @GetMapping("/new")
-    public String newPassport(@ModelAttribute("passport") Passport passport,
+    public String newPassport(@ModelAttribute("passport") PassportDTO passportDTO,
                               Model model,
                               @PageableDefault() Pageable pageable) {
 
@@ -80,11 +84,12 @@ public class PassportController {
     и последующее сохранение паспорта, есть проверка на отсутствие пользователя, добавлена на нестандартные случаи
      */
     @PostMapping
-    public String save(@ModelAttribute("passport") @Valid Passport passport,
+    public String save(@ModelAttribute("passport") @Valid PassportDTO passportDTO,
                        BindingResult bindingResult,
                        @RequestParam("ownerId") Integer ownerId,
                        Model model,
                        @PageableDefault() Pageable pageable) {
+        Passport passport = convertToPassport(passportDTO);
         passportValidator.validate(passport, bindingResult);
 
         if (ownerId == null) {
@@ -116,9 +121,9 @@ public class PassportController {
         model.addAttribute("owner", passportService.showByIdOfPassport(id).getOwner());
         return "passport/edit";
     }
-/*
-обработка данных на валидность и обновление паспорта
- */
+    /*
+    обработка данных на валидность и обновление паспорта
+     */
     @PostMapping("/{id}")
     public String update(@PathVariable("id") int id,
                          @ModelAttribute("passport") @Valid Passport passport,
@@ -135,7 +140,7 @@ public class PassportController {
         passportService.update(id, passport);
         return "redirect:/passports";
     }
-// перенаправление на страницу удаления паспорта
+    // перенаправление на страницу удаления паспорта
     @GetMapping("/{id}/delete")
     public String deletePassport(@PathVariable("id") int id, Model model) {
         Passport passport = passportService.showByIdOfPassport(id);
@@ -168,6 +173,8 @@ public class PassportController {
         return "passport/searchResult";
     }
 
-
+private Passport convertToPassport(PassportDTO passportDTO){
+        return modelMapper.map(passportDTO, Passport.class);
+}
 
 }

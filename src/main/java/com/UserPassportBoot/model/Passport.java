@@ -12,6 +12,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
 @Entity
+@Getter
 @Table(name = "passport")
 public class Passport {
     @Setter
@@ -81,33 +82,19 @@ public class Passport {
 
     }
 
-    public String getSerial() {
-        return serial;
-    }
 
     public void setSerial(String serial) {
-        if (serial == null || serial.length() != 4) {
-            throw new IllegalArgumentException("Serial must be 4 digits");
-        }
         this.serial = serial;
         this.controlDigit = calculateControlDigit(this.serial, this.number);
     }
 
-    public String getNumber() {
-        return number;
-    }
+
 
     public void setNumber(String number) {
-        if (number == null || number.length() != 6) {
-            throw new IllegalArgumentException("Number must be 6 digits");
-        }
         this.number = number;
         this.controlDigit = calculateControlDigit(this.serial, this.number);
     }
 
-    public int getControlDigit() {
-        return controlDigit;
-    }
 
     @PrePersist
     @PreUpdate
@@ -117,7 +104,7 @@ public class Passport {
 
     private int calculateControlDigit(String serial, String number) {
         if (serial == null || number == null || serial.length() != 4 || number.length() != 6) {
-            System.out.println("Can't to count control digit, invalid serial and number");
+            System.out.println("Can't to count control digit, invalid serial or number");
         }
 
         String coefficients = "731731731";
@@ -147,21 +134,6 @@ public class Passport {
                 '}';
     }
 
-    public User getOwner() {
-        return owner;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public LocalDate getDateOfReceipt() {
-        return dateOfReceipt;
-    }
-
-    public LocalDate getExpirationDate() {
-        return expirationDate;
-    }
 
     public String getFormattedDateOfReceipt() {
         return dateOfReceipt.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
