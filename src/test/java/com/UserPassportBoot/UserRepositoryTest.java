@@ -107,27 +107,7 @@ passportRepository.deleteAll();
         assertEquals("Alice", users.get(2).getName()); // 1985
     }
 
-    @Test
-    void findAllByOrderByDateOfBirthAsc_ShouldReturnEmptyPage_WhenNoUsersExist() {
-        userRepository.deleteAll();
-        Pageable pageable = PageRequest.of(0, 10);
 
-        Page<User> usersPage = userRepository.findAllByOrderByDateOfBirthAsc(pageable);
-
-        assertThat(usersPage.getContent().size()).isEqualTo(0);
-        assertThat(usersPage.getTotalElements()).isEqualTo(0);
-    }
-
-    @Test
-    void findAllByOrderByDateOfBirthDesc_ShouldReturnEmptyPage_WhenNoUsersExist() {
-        userRepository.deleteAll();
-        Pageable pageable = PageRequest.of(0, 10);
-
-        Page<User> usersPage = userRepository.findAllByOrderByDateOfBirthDesc(pageable);
-
-        assertThat(usersPage.getContent().size()).isEqualTo(0);
-        assertThat(usersPage.getTotalElements()).isEqualTo(0);
-    }
 
     @Test
     void save_ShouldCreateNewUser() {

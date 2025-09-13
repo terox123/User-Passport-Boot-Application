@@ -62,7 +62,7 @@ public class UserController {
 
         return "user/index";
     }
-    // отображение пользвоателя, его данных
+    // отображение пользователя, его данных
     @GetMapping("/{id}")
     public String show(Model model, @PathVariable("id") int id, @ModelAttribute("passport") Passport passport){
         model.addAttribute("user", userService.findUserById(id));
