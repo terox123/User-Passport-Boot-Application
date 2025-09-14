@@ -1,0 +1,6 @@
+.git
+*.md
+src/
+pom.xml
+*.iml
+.idea/
