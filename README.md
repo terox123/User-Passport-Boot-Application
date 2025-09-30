@@ -34,5 +34,4 @@ Spring Boot приложение для управления пользоват�
 
 
 
-mvn clean install
-mvn spring-boot:run
+
